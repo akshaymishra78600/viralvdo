@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuskha - 3000+ Viral Videos</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-bg: #0a0a0a;
+            --border-color: #222222;
+            --primary-accent: #ff003c;
+            --yellow-accent: #ffcc00;
+            --text-color: #ffffff;
+            --muted-text: #aaaaaa;
+            --green-accent: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            padding-bottom: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: #000000;
+            position: relative;
+        }
+
+        /* Top Alert Bar */
+        .top-alert {
+            background-color: #8b0000;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: bold;
+            text-align: center;
+            padding: 8px 12px;
+            border-bottom: 2px solid var(--primary-accent);
+        }
+
+        /* Live Purchase Ticker Section */
+        .ticker-container {
+            background: #111;
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 10px 0;
+            position: relative;
+            height: 44px;
+        }
+
+        .ticker-wrap {
+            display: inline-block;
+            position: absolute;
+            will-change: transform;
+        }
+
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 40px;
+            font-size: 13px;
+        }
+
+        .dot-green {
+            width: 8px;
+            height: 8px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            box-shadow: 0 0 8px #00ff00;
+        }
+
+        .ticker-text {
+            color: #ffffff;
+        }
+
+        .ticker-highlight {
+            color: var(--yellow-accent);
+            font-weight: bold;
+        }
+
+        /* Hero Image Container */
+        .hero-section {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .hero-img {
+            width: 100%;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* Main Call to Action Box Area */
+        .cta-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin: 15px;
+            padding: 20px 15px;
+            text-align: center;
+        }
+
+        /* Glowing Button Styles */
+        .btn-glow {
+            background: linear-gradient(90deg, #ffe600, #ffb300);
+            color: #000000;
+            font-size: 18px;
+            font-weight: 800;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+            animation: pulse-glow 2s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(1); box-shadow: 0 0 12px rgba(255, 204, 0, 0.5); }
+            100% { transform: scale(1.02); box-shadow: 0 0 22px rgba(255, 204, 0, 0.9); }
+        }
+
+        /* Value Badges Block Layout */
+        .badges-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .badge-item {
+            background: #111111;
+            border: 1px solid #222222;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .badge-fullwidth {
+            grid-column: span 2;
+        }
+
+        /* Typography & Headings */
+        .main-heading {
+            font-size: 26px;
+            font-weight: 900;
+            text-align: center;
+            margin: 20px 15px 10px 15px;
+        }
+
+        /* Demo Preview Section Styles */
+        .demo-section {
+            padding: 20px 15px;
+            text-align: center;
+        }
+        .demo-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+        .demo-subtitle {
+            font-size: 13px;
+            color: #b3b3b3;
+            margin-bottom: 20px;
+        }
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            justify-items: center;
+        }
+        .demo-thumb {
+            width: 100%;
+            max-height: 160px; /* Properly restricted size so they aren't too big */
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid #333;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .demo-thumb:hover {
+            transform: scale(1.03);
+            border-color: var(--yellow-accent);
+        }
+
+        /* Fixed Lightbox Modal Elements for Real Full Screen Preview */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 99999;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.95);
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-content {
+            max-width: 95vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #ffffff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Info Card Panels */
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin: 15px;
+            padding: 15px;
+        }
+
+        .info-title {
+            color: #ff4d4d;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .info-text {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .price-line {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        
+        .price-now {
+            color: var(--yellow-accent);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .price-old {
+            text-decoration: line-through;
+            color: var(--muted-text);
+            margin-left: 5px;
+        }
+
+        /* Countdown Timer Elements */
+        .timer-headline {
+            color: #ff3333;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar-container {
+            background: #222;
+            border-radius: 10px;
+            height: 10px;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #ff3300, #ffcc00);
+            width: 67%;
+            height: 100%;
+        }
+
+        .timer-box-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .timer-segment {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            min-width: 65px;
+            padding: 8px 4px;
+            text-align: center;
+        }
+
+        .timer-num {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff3333;
+            display: block;
+        }
+
+        .timer-label {
+            font-size: 10px;
+            color: var(--muted-text);
+        }
+
+        /* Bullet lists styling */
+        .list-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            align-items: flex-start;
+        }
+
+        .list-num {
+            background: var(--yellow-accent);
+            color: #000;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .list-num.green {
+            background: var(--green-accent);
+            color: #fff;
+        }
+
+        .list-bullet {
+            color: var(--yellow-accent);
+            flex-shrink: 0;
+        }
+
+        /* Center Big Highlight Badge Box */
+        .center-alert-tag {
+            background: rgba(255, 204, 0, 0.1);
+            border: 1px dashed var(--yellow-accent);
+            border-radius: 20px;
+            padding: 10px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            margin: 15px;
+        }
+
+        /* User Testimonials Section */
+        .reviews-section {
+            margin: 25px 15px;
+        }
+
+        .reviews-title {
+            font-size: 12px;
+            color: var(--muted-text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .review-card {
+            border-bottom: 1px solid #1c1c1c;
+            padding: 15px 0;
+        }
+
+        .stars {
+            color: var(--yellow-accent);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .review-text {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #eeeeee;
+        }
+
+        .review-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: #333;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .user-info-text {
+            font-size: 12px;
+        }
+
+        .verified-badge {
+            color: var(--green-accent);
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        /* Copy link layout button elements */
+        .share-container {
+            background: #0f0f0f;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px;
+            text-align: center;
+        }
+
+        .share-title {
+            font-size: 12px;
+            color: var(--muted-text);
+            margin-bottom: 8px;
+        }
+
+        .btn-share {
+            background: #222222;
+            color: #ffffff;
+            border: 1px solid #444;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Top Status Alert Notification Bar -->
+        <div class="top-alert">
+            🔥 सीमित ऑफर! 100 में से सिर्फ 33 slots बची हैं - आज रात के बाद Price ₹799 हो जाएगी! ⏳
+        </div>
+
+        <!-- Section 1: Randomized Active Customer Stream Notification -->
+        <div class="ticker-container" id="tickerContainer">
+            <div class="ticker-wrap" id="tickerWrap">
+                <!-- Javascript will inject dynamic randomized elements cleanly here -->
+            </div>
+        </div>
+
+        <!-- Main Banner Image -->
+        <div class="hero-section">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhdoYwQAzvSV7X750Y2acpiBXK8vES8iqSwBc9YPavd-rxfGdbsXSVzdDVGEKHUFSMHExNRLHx6K4sskt28bsL6xzT2OdSQytFValIJdHLKnjl-G5TVEw5CDn2eGUQddGp5CD9oeMhEpuF-uBKizM6t9LGTzVhJjMu4nRPX2RzyrkH-5fNCsxedsF0Vkfht/s1672/1000630948-2026-26-06-05-20-18.webp" alt="Product Bundle Banner" class="hero-img">
+        </div>
+
+        <!-- Section 2: Core Conversion Action Box Area -->
+        <div class="cta-box">
+            <a href="#" class="btn-glow">
+                🛒 अभी खरीदें - सिर्फ ₹99 →
+            </a>
+            <div class="badges-grid">
+                <div class="badge-item">✅ Instant Delivery</div>
+                <div class="badge-item">🔒 100% Private</div>
+                <div class="badge-item badge-fullwidth">♾️ Lifetime Access</div>
+            </div>
+        </div>
+
+        <!-- Informational Typography and Landing Details Header -->
+        <h2 class="main-heading">3000+ Viral Videos 🥵🔥</h2>
+
+        <!-- Demo Preview Section Start (With Full Screen Lightbox Feature) -->
+        <div class="demo-section">
+            <div class="demo-title">Demo Preview</div>
+            <div class="demo-subtitle">Purchase karne ke baad aapko premium content access milega 🔥</div>
+            
+            <div class="demo-grid">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg-gqJZXULB35IdIRn-pPUUAt16lulbqdrDPvj96ADO-VjpeFnOeysyJ-kgSi6gTBcoC2uq3V1U1jN4565gSdHh7vMjmn1RT0YLy21Ti2qH7fuQh3xXOPc3u6Zjc3a1OKe_k1riQYChQrc6nQO2dzmAaqqA4sEk9caudsYX6ANaRpJ_4i-s2ztkgP8MaRWe/s2134/6240061399593849097_119.jpg" class="demo-thumb" onclick="openLightbox(this.src)" alt="Demo 1">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjMi8Pi7A_xnelaOyeOhzLIB6EceWR-7TWsp6YZXjjeH92cymO09yHb7v7PB_I2v_yCUr7w6ra4WmNZtynDqITWwsZX2KBUjLiR6bHUwE_pBf4kFBLBKN8HfDMSayosm6crjgl5f4RMz6rNbh9FDtAElAC0m8l-XUmdveF7CZt_9Li4zb2xYbzaF8tyNquw/s2117/6240061399593849096_119.jpg" class="demo-thumb" onclick="openLightbox(this.src)" alt="Demo 2">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg31CtodTjrmfiu4cw7_52MVezCN_jQ341IMLd_u7dsV38_bV8Pp3byhjlmVDqYUsyEGjeV4M1w4QH90uo0M_BdmWau1z7T650aW1FELvZL4rD27fOY8K7sZjn7EoXFXAAtMGdNM6E_XQ2lNZ19yk1TDFTdQ-A5TLs6u0nFIoSFQ31B-SNGTuQpGhMRsdgB/s2148/6240061399593849098_119.jpg" class="demo-thumb" onclick="openLightbox(this.src)" alt="Demo 3">
+            </div>
+        </div>
+
+        <!-- Real Full Screen Lightbox Container Overlay Box -->
+        <div id="customLightbox" class="lightbox-modal" onclick="closeLightbox()">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <img id="lightboxImg" class="lightbox-content" src="" alt="Preview">
+        </div>
+        <!-- Demo Preview Section End -->
+
+        <div class="info-card">
+            <div class="info-title">इस PRODUCT के बारे में 👇</div>
+            <div class="info-text" style="font-weight: bold; font-size: 16px;">3000+ देसी Study Material का पूरा खजाना पाओ अभी 🥵</div>
+            
+            <div class="price-line">
+                आज की कीमत: <span class="price-now">₹99</span> <span class="price-old">Regular ₹799</span>
+            </div>
+
+            <p class="info-text" style="margin-top: 15px; color: #ddd; font-size: 14px;">
+                <strong>सीमित ऑफर – सब कुछ सिर्फ ₹99 में</strong><br>
+                आज के पहले 100 Buyers के लिए ही (पिछले कुछ घंटों में 67 लोग पहले ही ले चुके हैं) और आज रात बंद – इसके बाद price ₹799 हो जाएगी!
+            </p>
+        </div>
+
+        <!-- Section 2: Realtime Interactive Value Breakdown & 30-Min Dynamic Scarcity Timer Block -->
+        <div class="info-card" style="border-color: #ff3333;">
+            <div class="timer-headline">⚠️ जल्दी करो! Slots खत्म हो रही हैं</div>
+            <p class="info-text" style="font-size: 13px;">100 में से <span style="color:#ff3333; font-weight:bold;">67 लोग पहले ही खरीद चुके हैं</span> – सिर्फ 33 बाकी!</p>
+            
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill"></div>
+            </div>
+            <p style="font-size: 11px; text-align: center; color: var(--yellow-accent); font-weight: bold;">67% slots भर चुकी हैं। अभी मत रुको!</p>
+
+            <div class="timer-box-wrapper">
+                <div class="timer-segment">
+                    <span class="timer-num" id="timer-hr">00</span>
+                    <span class="timer-label">घंटे</span>
+                </div>
+                <div class="timer-segment">
+                    <span class="timer-num" id="timer-min">30</span>
+                    <span class="timer-label">मिनट</span>
+                </div>
+                <div class="timer-segment">
+                    <span class="timer-num" id="timer-sec">00</span>
+                    <span class="timer-label">सेकंड</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bonus Bundle Breakdown Layout Panels -->
+        <div class="info-card">
+            <div class="info-title" style="color:var(--yellow-accent);">🎁 आज के EXTRA BONUSES (सिर्फ आज के लिए)</div>
+            
+            <div class="list-item">
+                <div class="list-num">1</div>
+                <div>अगले 30 दिन रोज़ 100 नई Videos बिल्कुल Free <span style="color:var(--yellow-accent);">(कीमत ₹999)</span> 🔥</div>
+            </div>
+            <div class="list-item">
+                <div class="list-num">2</div>
+                <div>Private VIP Group का Access – एकदम Free 🔥</div>
+            </div>
+        </div>
+
+        <div class="center-alert-tag">
+            आज आज देंगे: सिर्फ ₹99 🎯
+        </div>
+
+        <!-- Guarantees Policy Block -->
+        <div class="info-card">
+            <div class="info-title" style="color:var(--green-accent);">हमारा वादा आपसे ✔️</div>
+            
+            <div class="list-item">
+                <div class="list-num green">1</div>
+                <div><strong>Content की गारंटी</strong> – 3000+ Videos मिलेंगे, पक्का! 💯</div>
+            </div>
+            <div class="list-item">
+                <div class="list-num green">2</div>
+                <div><strong>Privacy की गारंटी</strong> – आपका Gmail और number सिर्फ delivery के लिए use होगा। 100% गुप्त और सुरक्षित। किसी के साथ share नहीं होगा।</div>
+            </div>
+
+            <p style="text-align: center; font-size: 13px; font-weight: bold; border-top: 1px solid #222; padding-top: 12px; margin-top: 10px;">
+                कोई hidden charge नहीं। कोई renewal नहीं। एक बार की payment। बस।
+            </p>
+        </div>
+
+        <!-- Feature List Grid Checkmarks -->
+        <div class="info-card">
+            <div class="info-title">अभी आपको क्या मिलेगा</div>
+            <div class="list-item"><span class="list-bullet">🔸</span><span>3000+ Latest HD देसी Study Material (Videos + Content)</span></div>
+            <div class="list-item"><span class="list-bullet">🔸</span><span>Regular Updates - रोज़ नया content add होता है</span></div>
+            <div class="list-item"><span class="list-bullet">🔸</span><span>Lifetime Access - कोई expiry नहीं</span></div>
+            <div class="list-item"><span class="list-bullet">🔸</span><span>Instant Delivery - payment के 2 मिनट में मिलेगा</span></div>
+            <p style="font-size: 13px; font-style: italic; color: var(--muted-text); margin-top: 10px; text-align: center;">एक बार शुरू किया तो बंद करने का मन नहीं करेगा। 😉</p>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <p style="font-size: 16px; font-weight: bold; color: var(--yellow-accent);">अभी ₹99 में मिल रहा है 🔥</p>
+            <p style="font-size: 15px;">अब देर मत करो ⏰</p>
+            <p style="font-size: 14px; color: #ff3333;">बाद में price बढ़ जाएगी 📈</p>
+            <p style="font-size: 15px;">अभी फायदा उठाओ 👇</p>
+        </div>
+
+        <!-- Section 3: User Customer Reviews Area Base Template -->
+        <div class="reviews-section">
+            <div class="reviews-title">असली CUSTOMERS की राय</div>
+
+            <!-- Review 1 -->
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <div class="review-text">"भाई ये तो पूरा OP माल निकला 🙏🔥 पैसे वसूल!"</div>
+                <div class="review-user">
+                    <div class="user-avatar">JS</div>
+                    <div class="user-info-text">
+                        <strong>Jatin Shah</strong>
+                        <span class="verified-badge">✓ Verified Buyer</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <div class="review-text">"भाई ऐसा collection पहली बार देखा 😍 Highly recommend!"</div>
+                <div class="review-user">
+                    <div class="user-avatar">RS</div>
+                    <div class="user-info-text">
+                        <strong>Rajesh Shukla</strong>
+                        <span class="verified-badge">✓ Verified Buyer</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <div class="review-text">"भाई full पैसे वसूल है 💯 👑 ₹99 में इतना? Unbelievable!"</div>
+                <div class="review-user">
+                    <div class="user-avatar">AN</div>
+                    <div class="user-info-text">
+                        <strong>Amit N.</strong>
+                        <span class="verified-badge">✓ Verified Buyer</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 4 -->
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <div class="review-text">"एक बार अंदर देखा... फिर निकलने का मन नहीं हुआ 😋"</div>
+                <div class="review-user">
+                    <div class="user-avatar">N</div>
+                    <div class="user-info-text">
+                        <strong>Nayan</strong>
+                        <span class="verified-badge">✓ Verified Buyer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Action Conversion Block Element -->
+        <div class="cta-box" style="margin-top: 20px;">
+            <div class="info-title" style="color: var(--yellow-accent); font-size: 16px;">🔐 अभी Access पाएं</div>
+            <p style="font-size: 13px; color:#ccc; margin-bottom: 12px;">Buy Now पर क्लिक करके पूरा access पाएं</p>
+            
+            <div style="font-size: 28px; font-weight: 900; margin-bottom: 15px;">
+                ₹99 <span style="font-size: 16px; text-decoration: line-through; color: var(--muted-text); font-weight: normal; margin-left: 5px;">₹799</span>
+            </div>
+
+            <a href="#" class="btn-glow" style="border-radius: 8px; margin-bottom: 20px;">
+                अभी खरीदें - ₹99 →
+            </a>
+
+            <div style="text-align: left; font-size: 13px; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #222; padding-top: 15px;">
+                <div>🟢 100% Secure Payment</div>
+                <div>🟢 Instant Delivery – तुरंत Access</div>
+                <div>🟢 100% Private – कोई नहीं जानेगा</div>
+                <div>🟢 Subscription नहीं – कोई Hidden Charge नहीं</div>
+            </div>
+        </div>
+
+        <!-- Social Share Module Block UI Element -->
+        <div class="share-container">
+            <div class="share-title">दोस्तों को भेजें</div>
+            <button class="btn-share" onclick="alert('Link Copied!')">🔗 Link Copy करें</button>
+        </div>
+
+    </div>
+
+    <!-- Scripting Operations: Live Infinite Randomized Customer Streaming & 30 Min Timer -->
+    <script>
+        // Array containing exactly 50 localized Indian names and distinct cities
+        const namesData = [
+            { name: "Rahul", city: "Delhi" }, { name: "Amit", city: "Mumbai" }, { name: "Vikash", city: "Patna" },
+            { name: "Suresh", city: "Jaipur" }, { name: "Ankit", city: "Lucknow" }, { name: "Pooja", city: "Indore" },
+            { name: "Deepak", city: "Bhopal" }, { name: "Sumit", city: "Meerut" }, { name: "Rohan", city: "Pune" },
+            { name: "Aman", city: "Ranchi" }, { name: "Sunil", city: "Kanpur" }, { name: "Vijay", city: "Agra" },
+            { name: "Manish", city: "Ahmedabad" }, { name: "Sanjay", city: "Surat" }, { name: "Ajay", city: "Nagpur" },
+            { name: "Ravi", city: "Chandigarh" }, { name: "Sonu", city: "Ludhiana" }, { name: "Abhishek", city: "Varanasi" },
+            { name: "Gaurav", city: "Prayagraj" }, { name: "Vivek", city: "Gwalior" }, { name: "Sandip", city: "Jabalpur" },
+            { name: "Alok", city: "Gorakhpur" }, { name: "Pankaj", city: "Kota" }, { name: "Karan", city: "Jodhpur" },
+            { name: "Sachin", city: "Udaipur" }, { name: "Nitin", city: "Amritsar" }, { name: "Ashish", city: "Jalandhar" },
+            { name: "Rohit", city: "Bareilly" }, { name: "Manoj", city: "Aligarh" }, { name: "Kunal", city: "Moradabad" },
+            { name: "Rajesh", city: "Ghaziabad" }, { name: "Vikram", city: "Noida" }, { name: "Arjun", city: "Gurugram" },
+            { name: "Mayank", city: "Faridabad" }, { name: "Harish", city: "Panipat" }, { name: "Vinay", city: "Rohtak" },
+            { name: "Pradeep", city: "Hisar" }, { name: "Satish", city: "Karnal" }, { name: "Jatin", city: "Sonipat" },
+            { name: "Tarun", city: "Mathura" }, { name: "Yash", city: "Jhansi" }, { name: "Deepesh", city: "Muzaffarnagar" },
+            { name: "Hemant", city: "Saharanpur" }, { name: "Praveen", city: "Gaya" }, { name: "Shubham", city: "Bhagalpur" },
+            { name: "Vishal", city: "Muzaffarpur" }, { name: "Mohit", city: "Dhanbad" }, { name: "Anand", city: "Bokaro" },
+            { name: "Saurabh", city: "Jamshedpur" }, { name: "Rakesh", city: "Bilaspur" }
+        ];
+
+        // Fisher-Yates shuffle engine implementation to guarantee absolute randomization distribution
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // Initialize and generate ticker sequence loop cleanly
+        function initTicker() {
+            const wrap = document.getElementById('tickerWrap');
+            const shuffled = shuffle([...namesData]); // Ensure every profile shows exactly once per batch cycle
+            
+            // Generate standard item element nodes
+            shuffled.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'ticker-item';
+                div.innerHTML = `<span class="dot-green"></span><span class="ticker-text"><span class="ticker-highlight">${item.name} (${item.city})</span> ने अभी खरीदा</span>`;
+                wrap.appendChild(div);
+            });
+
+            // Clone child collection elements to process infinite loop overflow scroll resetting smoothly
+            const items = Array.from(wrap.children);
+            items.forEach(item => {
+                const clone = item.cloneNode(true);
+                wrap.appendChild(clone);
+            });
+
+            // Dynamic CSS calculation loop execution animate process logic
+            let currentX = 0;
+            const speed = 1.2; // Constant rendering pixels per frame scroll rate speed configuration
+            
+            function animate() {
+                currentX -= speed;
+                // Reset frame window check calculations using width layout points safely
+                if (Math.abs(currentX) >= (wrap.scrollWidth / 2)) {
+                    currentX = 0;
+                }
+                wrap.style.transform = `translateX(${currentX}px)`;
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // Exact custom 30-minute lock countdown tracking handler function implementation
+        function initCountdown() {
+            let totalSeconds = 30 * 60; // Absolute 30 Minute Lock Value Configuration
+
+            const hrElement = document.getElementById('timer-hr');
+            const minElement = document.getElementById('timer-min');
+            const secElement = document.getElementById('timer-sec');
+
+            setInterval(() => {
+                if (totalSeconds <= 0) {
+                    // Lock loop reset recycling automatically at expiration mark safely
+                    totalSeconds = 30 * 60;
+                }
+
+                totalSeconds--;
+
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+
+                hrElement.textContent = String(hours).padStart(2, '0');
+                minElement.textContent = String(minutes).padStart(2, '0');
+                secElement.textContent = String(seconds).padStart(2, '0');
+            }, 1000);
+        }
+
+        // Image Full-Screen Lightbox Viewport Logic
+        function openLightbox(src) {
+            const modal = document.getElementById('customLightbox');
+            const img = document.getElementById('lightboxImg');
+            img.src = src;
+            modal.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('customLightbox').style.display = 'none';
+        }
+
+        // Core Document Executions trigger binding entry
+        window.addEventListener('DOMContentLoaded', () => {
+            initTicker();
+            initCountdown();
+        });
+    </script>
+</body>
+</html>
