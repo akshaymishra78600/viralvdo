@@ -20,7 +20,6 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
     
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Latest 5000+ Viral Videos</title>
@@ -113,7 +112,7 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
             font-weight: bold;
         }
 
-        /* Hero Image Container */
+        /* Hero Image/Video Container */
         .hero-section {
             padding: 15px;
             text-align: center;
@@ -216,7 +215,7 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
         }
         .demo-thumb {
             width: 100%;
-            max-height: 160px; /* Properly restricted size so they aren't too big */
+            max-height: 160px;
             object-fit: cover;
             border-radius: 12px;
             border: 2px solid #333;
@@ -505,12 +504,13 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
         <!-- Main Banner Video -->
         <div class="hero-section">
             <video 
-                src="https://raw.githubusercontent.com/akshaymishra78600/viralvdo/main/video.mp4" 
+                src="https://cdn.jsdelivr.net/gh/akshaymishra78600/viralvdo@main/video.mp4" 
                 class="hero-img" 
                 autoplay 
                 loop 
                 muted 
-                playsinline>
+                playsinline 
+                preload="auto">
                 Your browser does not support the video tag.
             </video>
         </div>
@@ -730,7 +730,6 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
 
     <!-- Scripting Operations: Live Infinite Randomized Customer Streaming & 30 Min Timer -->
     <script>
-        // Array containing exactly 50 localized Indian names and distinct cities
         const namesData = [
             { name: "Rahul", city: "Delhi" }, { name: "Amit", city: "Mumbai" }, { name: "Vikash", city: "Patna" },
             { name: "Suresh", city: "Jaipur" }, { name: "Ankit", city: "Lucknow" }, { name: "Pooja", city: "Indore" },
@@ -751,7 +750,6 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
             { name: "Saurabh", city: "Jamshedpur" }, { name: "Rakesh", city: "Bilaspur" }
         ];
 
-        // Fisher-Yates shuffle engine implementation to guarantee absolute randomization distribution
         function shuffle(array) {
             let currentIndex = array.length, randomIndex;
             while (currentIndex != 0) {
@@ -762,12 +760,10 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
             return array;
         }
 
-        // Initialize and generate ticker sequence loop cleanly
         function initTicker() {
             const wrap = document.getElementById('tickerWrap');
-            const shuffled = shuffle([...namesData]); // Ensure every profile shows exactly once per batch cycle
+            const shuffled = shuffle([...namesData]);
             
-            // Generate standard item element nodes
             shuffled.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'ticker-item';
@@ -775,20 +771,17 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
                 wrap.appendChild(div);
             });
 
-            // Clone child collection elements to process infinite loop overflow scroll resetting smoothly
             const items = Array.from(wrap.children);
             items.forEach(item => {
                 const clone = item.cloneNode(true);
                 wrap.appendChild(clone);
             });
 
-            // Dynamic CSS calculation loop execution animate process logic
             let currentX = 0;
-            const speed = 1.2; // Constant rendering pixels per frame scroll rate speed configuration
+            const speed = 1.2;
             
             function animate() {
                 currentX -= speed;
-                // Reset frame window check calculations using width layout points safely
                 if (Math.abs(currentX) >= (wrap.scrollWidth / 2)) {
                     currentX = 0;
                 }
@@ -798,9 +791,8 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
             animate();
         }
 
-        // Exact custom 30-minute lock countdown tracking handler function implementation
         function initCountdown() {
-            let totalSeconds = 30 * 60; // Absolute 30 Minute Lock Value Configuration
+            let totalSeconds = 30 * 60;
 
             const hrElement = document.getElementById('timer-hr');
             const minElement = document.getElementById('timer-min');
@@ -808,7 +800,6 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
 
             setInterval(() => {
                 if (totalSeconds <= 0) {
-                    // Lock loop reset recycling automatically at expiration mark safely
                     totalSeconds = 30 * 60;
                 }
 
@@ -824,7 +815,6 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
             }, 1000);
         }
 
-        // Image Full-Screen Lightbox Viewport Logic
         function openLightbox(src) {
             const modal = document.getElementById('customLightbox');
             const img = document.getElementById('lightboxImg');
@@ -836,7 +826,6 @@ src="https://www.facebook.com/tr?id=308384008828586&ev=PageView&noscript=1"
             document.getElementById('customLightbox').style.display = 'none';
         }
 
-        // Core Document Executions trigger binding entry
         window.addEventListener('DOMContentLoaded', () => {
             initTicker();
             initCountdown();
